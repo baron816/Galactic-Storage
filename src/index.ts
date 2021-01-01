@@ -1,5 +1,5 @@
-import * as React from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as React from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type Subscriber = (newVal: any) => void;
 
@@ -11,7 +11,7 @@ export class StorageListener<E extends string> {
   constructor(eventKeys: E[], storageKey?: string) {
     this.storageKey = storageKey;
     this.events = new Map(eventKeys.map((eventKey) => [eventKey, new Set()]));
-    this.state = Object.fromEntries(eventKeys.map(key => [key]));
+    this.state = Object.fromEntries(eventKeys.map((key) => [key]));
   }
 
   init(storageKey?: string) {
@@ -56,7 +56,7 @@ export class StorageListener<E extends string> {
     this.events.get(key)?.add(subscriber);
 
     return () => {
-        this.events.get(key)?.delete(subscriber)
+      this.events.get(key)?.delete(subscriber);
     };
   }
 
@@ -66,7 +66,7 @@ export class StorageListener<E extends string> {
       const newStateString = JSON.stringify(newState);
 
       if (!this.events.has(key) || this.storageKey == null) {
-          return;
+        return;
       }
 
       for (const sub of this.events.get(key)!) {
@@ -75,7 +75,7 @@ export class StorageListener<E extends string> {
       AsyncStorage.setItem(this.storageKey, newStateString);
       this.state = newState;
     } catch (e) {
-      throw Error("Failed to update Async storage: " + e);
+      throw Error('Failed to update Async storage: ' + e);
     }
   }
 }
@@ -98,6 +98,6 @@ export function makeCreateStorage<E extends string>(
       }, []);
 
       return [state, setVal];
-    }
+    };
   };
 }
