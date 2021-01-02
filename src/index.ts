@@ -75,7 +75,7 @@ export class StorageListener<E extends string> {
       AsyncStorage.setItem(this.storageKey, newStateString);
       this.state = newState;
     } catch (e) {
-      throw Error('Failed to update Async storage: ' + e);
+      throw Error(`Failed to update Async storage:  ${e}`);
     }
   }
 }
@@ -84,7 +84,7 @@ export function makeCreateStorage<E extends string>(
   storageListener: StorageListener<E>
 ) {
   return function createStorage<T>(key: E, defaultValue: T) {
-    return function useStorage(): [T, (newval: T) => void] {
+    return function useStorage(): [T, (newal: T) => void] {
       const [state, setState] = React.useState<T>(
         storageListener.getValue(key) ?? defaultValue
       );
